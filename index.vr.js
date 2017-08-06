@@ -6,24 +6,47 @@ import {
   Text,
   View,
   Model,
+  Animated,
 } from 'react-vr';
 
+const AnimatedModel = Animated.createAnimatedComponent(Model);
+
 export default class HashrocketVR extends React.Component {
+  state = {
+    rotation: new Animated.Value(0)
+  }
+
+  componentDidMount() {
+    this.rotate();
+  }
+
+  rotate = () => {
+    this.state.rotation.setValue(0);
+    Animated.timing(
+      this.state.rotation,
+      {
+        toValue: 360,
+        duration: 10000,
+      }
+    ).start(this.rotate);
+  }
+
   render() {
     return (
       <View>
         <Pano source={asset('chess-world.jpg')}/>
-          <Model
-            source={{
-              obj: asset('hashrocket.obj'),
-            }}
-            style={{
-              color: '#af1e23',
-              transform: [
-                {translate: [0, -3, -12]}
-              ]
-            }}
-          />
+        <AnimatedModel
+          source={{
+            obj: asset('hashrocket.obj'),
+          }}
+          style={{
+            color: '#af1e23',
+            transform: [
+              {translate: [0, -3, -12]},
+              {rotateY: this.state.rotation}
+            ]
+          }}
+        />
       </View>
     );
   }
