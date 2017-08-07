@@ -9,6 +9,10 @@ import {
   Animated,
 } from 'react-vr';
 
+import {
+  Easing
+} from 'react-native';
+
 const AnimatedModel = Animated.createAnimatedComponent(Model);
 
 export default class HashrocketVR extends React.Component {
@@ -27,6 +31,7 @@ export default class HashrocketVR extends React.Component {
       {
         toValue: 360,
         duration: 10000,
+        easing: Easing.linear,
       }
     ).start(this.rotate);
   }
