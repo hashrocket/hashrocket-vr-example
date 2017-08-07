@@ -7,6 +7,8 @@ import {
   View,
   Model,
   Animated,
+  AmbientLight,
+  PointLight,
 } from 'react-vr';
 
 import {
@@ -40,7 +42,10 @@ export default class HashrocketVR extends React.Component {
     return (
       <View>
         <Pano source={asset('chess-world.jpg')}/>
+        <AmbientLight intensity={0.5} />
+        <PointLight style={{color:'white', transform:[{translate:[0, 0, 0]}]}} />
         <AnimatedModel
+          lit
           source={{
             obj: asset('hashrocket.obj'),
           }}
