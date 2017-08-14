@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   </head>
   <body>
-    <!-- When you're ready to deploy your app, update this line to point to your compiled client.bundle.js -->
     <script src="client.bundle.js"></script>
     <script>
-      // Initialize the React VR application
-      ReactVR.init(
-        // When you're ready to deploy your app, update this line to point to
-        // your compiled index.bundle.js
-        'index.bundle.js',
-        // Attach it to the body tag
-        document.body,
-        { assetRoot: '../static_assets/' }
-      );
+      function inIframe () { try { return window !== window.top; } catch (e) { return true; } }
+      function isMobile() { return typeof window.orientation !== 'undefined' }
+      if (inIframe() && isMobile()) {
+        var img = document.createElement("img");
+        img.setAttribute('src', './screenshot.png');
+        img.setAttribute('height', 'auto');
+        img.setAttribute('width', '100%');
+        document.body.appendChild(img);
+      } else {
+        ReactVR.init(
+          'index.bundle.js',
+          document.body,
+          { assetRoot: '../static_assets/' }
+        );
+      }
     </script>
   </body>
 </html>
